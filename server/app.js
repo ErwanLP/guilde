@@ -4,11 +4,22 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let lessMiddleware = require('less-middleware');
 let logger = require('morgan');
+let mongoose = require('mongoose');
+let cors = require('cors');
+require('dotenv').config();
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 
 let app = express();
+
+// mongo atlas connection
+mongoose.connect(
+    'mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' +
+    process.env.DB_HOST + '?retryWrites=true&w=majority',
+    {useNewUrlParser: true}).
+    then(() => console.log('DB OK')).
+    catch(error => console.error(error));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +31,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
