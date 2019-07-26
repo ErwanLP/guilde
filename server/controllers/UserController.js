@@ -17,7 +17,6 @@ module.exports.signUp = (req, res) => {
           console.log('user already created');
         }
         res.send('respond with a resource');
-
       },
   );
 };

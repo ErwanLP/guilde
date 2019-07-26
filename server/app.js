@@ -7,9 +7,11 @@ let logger = require('morgan');
 let mongoose = require('mongoose');
 let cors = require('cors');
 require('dotenv').config();
+let ServerController = require('./controllers/ServerController');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
+let serversRouter = require('./routes/servers');
 
 let app = express();
 
@@ -18,7 +20,10 @@ mongoose.connect(
     'mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' +
     process.env.DB_HOST + '?retryWrites=true&w=majority',
     {useNewUrlParser: true}).
-    then(() => console.log('DB OK')).
+    then(() => {
+      console.log('DB OK');
+      ServerController.init();
+    }).
     catch(error => console.error(error));
 
 // view engine setup
@@ -35,6 +40,7 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/servers', serversRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
