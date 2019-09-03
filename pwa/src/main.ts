@@ -4,11 +4,13 @@ import firebase from 'firebase';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
+import vuetify from '@/plugins/vuetify' // path to vuetify export
+
 
 const config: any = {
-  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
-  messagingSenderId: 'YOUR_MESSAGING_SEND_ID',
+    apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+    projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+    messagingSenderId: 'YOUR_MESSAGING_SEND_ID',
 };
 
 config.authDomain = config.projectId + '.firebaseapp.com';
@@ -24,7 +26,8 @@ store.commit('EDIT_HOST', window.location.origin === 'http://localhost:8080'
     : window.location.origin);
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
 }).$mount('#app');
