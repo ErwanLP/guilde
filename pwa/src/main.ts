@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
-import vuetify from '@/plugins/vuetify' // path to vuetify export
+import vuetify from '@/plugins/vuetify'; // path to vuetify export
 
 
 const config: any = {

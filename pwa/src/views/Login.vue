@@ -1,8 +1,31 @@
 <template>
-    <div class="login">
-        <h3>Log In</h3>
-        <button @click="login">Connection With Google</button>
-    </div>
+    <v-card
+    >
+        <v-img
+                class="white--text"
+                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        >
+        </v-img>
+
+        <v-card-text>
+            <span>Login</span>
+        </v-card-text>
+
+        <v-card-actions>
+            <v-btn @click="login"
+                   text
+                   color="orange"
+            >
+                Log In With Google
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+
+
+    <!--    <div class="login">
+            <h3>Log In</h3>
+            <button>Connection With Google</button>
+        </div>-->
 </template>
 
 <script>

@@ -5,20 +5,34 @@
                 app
         >
             <v-list dense>
-                <v-list-item @click="">
+                <v-list-item>
                     <v-list-item-action>
                         <v-icon>mdi-home</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Home</v-list-item-title>
+                        <v-list-item-title>
+                            <router-link to="/">Home</router-link>
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item @click="">
+                <v-list-item>
                     <v-list-item-action>
                         <v-icon>mdi-contact-mail</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Contact</v-list-item-title>
+                        <v-list-item-title>
+                            <router-link to="/login">Login</router-link>
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-action>
+                        <v-icon>mdi-contact-mail</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            <router-link to="/server">Server</router-link>
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -30,57 +44,17 @@
                 dark
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title>Application</v-toolbar-title>
+            <v-toolbar-title>Golden City</v-toolbar-title>
         </v-app-bar>
 
         <v-content>
-            <v-container
-                    class="fill-height"
-                    fluid
-            >
-                <v-row
-                        align="center"
-                        justify="center"
-                >
-                    <v-col class="text-center">
-                        <v-tooltip left>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                        :href="source"
-                                        icon
-                                        large
-                                        target="_blank"
-                                        v-on="on"
-                                >
-                                    <v-icon large>mdi-code-tags</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Source</span>
-                        </v-tooltip>
-
-                        <v-tooltip right>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                        icon
-                                        large
-                                        href="https://codepen.io/johnjleider/pen/zgxeLQ"
-                                        target="_blank"
-                                        v-on="on"
-                                >
-                                    <v-icon large>mdi-codepen</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Codepen</span>
-                        </v-tooltip>
-                    </v-col>
-                </v-row>
-            </v-container>
+            <router-view></router-view>
         </v-content>
         <v-footer
                 color="indigo"
                 app
         >
-            <span class="white--text">&copy; 2019</span>
+            <span class="white--text">{{userName}}</span>
         </v-footer>
     </v-app>
 </template>
@@ -93,5 +67,10 @@
     data: () => ({
       drawer: null,
     }),
-  }
+    computed: {
+      userName() {
+        return this.$store.state.user ? this.$store.state.user.displayName : '';
+      },
+    },
+  };
 </script>
