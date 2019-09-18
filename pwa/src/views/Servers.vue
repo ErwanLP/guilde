@@ -6,13 +6,13 @@
             <v-list-item
                     v-for="(server, i) in serverList"
                     :key="i"
-                    @click=""
+                    @click="goServer(server)"
             >
                 <v-list-item-avatar>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title>Server  {{i}}</v-list-item-title>
+                    <v-list-item-title>Server {{i}}</v-list-item-title>
                     <v-list-item-subtitle v-html="server._id"></v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    name: 'server',
+    name: 'servers',
     data() {
       return {};
     },
@@ -36,7 +36,11 @@
           () => this.$router.push({name: 'servers'}),
       );
     },
-    methods: {},
+    methods: {
+      goServer(server) {
+        this.$router.push({name: 'server',params: { id: server._id }})
+      },
+    },
 
   };
 </script>
