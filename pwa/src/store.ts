@@ -8,6 +8,7 @@ export default new Vuex.Store({
     state: {
         user: {},
         serverList: [],
+        server: {},
         host: undefined,
         axiosInstance: undefined,
     },
@@ -17,6 +18,12 @@ export default new Vuex.Store({
         },
         SET_SERVER_LIST(state, serverList) {
             state.serverList = serverList;
+        },
+        SET_SERVER(state, server) {
+            Vue.set(state.server, server._id, server)
+        },
+        SET_LOCATION_LIST(state, payload) {
+            Vue.set(state.server[payload.serverId], 'locations', payload.locations)
         },
         EDIT_HOST(state, payload) {
             state.host = payload;
@@ -42,6 +49,24 @@ export default new Vuex.Store({
                 {},
             ).then((r) => r.data).then((servers) => {
                 commit('SET_SERVER_LIST', servers);
+            });
+        },
+        getServer({commit, state}, id) {
+            return state.axiosInstance.get('servers/' + id,
+                {},
+            ).then((r) => r.data).then((server) => {
+                commit('SET_SERVER', server);
+                return server
+            });
+        },
+        getLocationList({commit, state}, id) {
+            return state.axiosInstance.get('servers/' + id + '/locations/',
+                {},
+            ).then((r) => r.data).then((locations) => {
+                commit('SET_LOCATION_LIST', {
+                    serverId: id,
+                    locations: locations
+                });
             });
         },
     },

@@ -7,10 +7,23 @@ module.exports.read = (req, res) => {
       },
   );
 };
+
+module.exports.readById = (req, res) => {
+  return Server.findById(req.params.id).then(
+      server => {
+        res.send(server);
+      },
+  ).catch(e => {
+    console.log(e);
+    res.status(500).send(e);
+  });
+};
+
 module.exports.init = async () => {
   // PURGE
   let servers = await Server.find({});
-  for await (p of servers.map(s => s.remove())) {}
+  for await (p of servers.map(s => s.remove())) {
+  }
   // CREATE
   let server = new Server();
   await server.save();

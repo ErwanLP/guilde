@@ -32,13 +32,11 @@
       },
     },
     beforeMount() {
-      this.$store.dispatch('getServerList').then(
-          () => this.$router.push({name: 'servers'}),
-      );
+      this.$store.dispatch('getServerList')
     },
     methods: {
       goServer(server) {
-        this.$router.push({name: 'server',params: { id: server._id }})
+        this.$router.push({name: 'server', params: {id: server._id}});
       },
     },
 

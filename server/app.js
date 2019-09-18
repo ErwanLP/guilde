@@ -22,7 +22,7 @@ mongoose.connect(
     {useNewUrlParser: true}).
     then(() => {
       console.log('DB OK');
-      ServerController.init();
+      //ServerController.init();
     }).
     catch(error => console.error(error));
 
