@@ -20,6 +20,12 @@ serverSchema.methods.generateWorker = function(workerData) {
   return [worker];
 };
 
+serverSchema.post('remove', document => {
+  Location.find({server: document._id}).then(
+      locations => locations.forEach(l => l.remove()),
+  );
+});
+
 const Server = mongoose.model('Server', serverSchema);
 
 module.exports = Server;
