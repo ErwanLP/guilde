@@ -1,25 +1,35 @@
 <template>
     <v-list two-line subheader>
-        <v-subheader inset>Location</v-subheader>
+        <v-subheader inset>Locations</v-subheader>
         <v-list-item
-                v-for="item in locations"
-                :key="item.title"
+                v-for="(location, index) in locations"
+                :key="location.title"
                 @click=""
         >
             <v-list-item-avatar>
                 <v-icon
-                        :class="[item.iconClass]"
-                        v-text="item.icon"
+                        :class="[location.iconClass]"
+                        v-text="location.icon"
                 ></v-icon>
             </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                <v-list-item-title>Localisation {{index}}</v-list-item-title>
+                <v-list-item-subtitle>
+                    <v-chip pill v-for="fertility in location.fertilityList">
+                        <v-avatar small
+                                left
+                                color="blue"
+                        >
+                            {{fertility.ratio}}
+                        </v-avatar>
+                        {{fertility.itemType}}
+                    </v-chip>
+                </v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-action>
-                <v-btn icon>
+                <v-btn icon v-if="location.player">
                     <v-icon color="grey lighten-1">mdi-information</v-icon>
                 </v-btn>
             </v-list-item-action>
@@ -81,6 +91,8 @@
                   iconClass: 'grey lighten-1 white--text',
                   title: 'Photos',
                   subtitle: 'Jan 9, 2014',
+                  fertilityList: l.fertilityList,
+                  player: l.player,
                 }),
             ) :
             [];
