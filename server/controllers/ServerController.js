@@ -35,4 +35,9 @@ module.exports.init = async () => {
   ]).forEach(location => {
     location.save();
   });
+  server.generateWorker({
+    workerName: 'Worker 1',
+  }).forEach(worker => {
+    worker.save();
+  });
 };

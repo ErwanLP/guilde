@@ -3,7 +3,7 @@
         <v-subheader inset>Locations</v-subheader>
         <v-list-item
                 v-for="(location, index) in locations"
-                :key="location.title"
+                :key="location._id"
                 @click=""
         >
             <v-list-item-avatar>
@@ -18,8 +18,8 @@
                 <v-list-item-subtitle>
                     <v-chip pill v-for="fertility in location.fertilityList">
                         <v-avatar small
-                                left
-                                color="blue"
+                                  left
+                                  color="blue"
                         >
                             {{fertility.ratio}}
                         </v-avatar>
@@ -40,20 +40,20 @@
         <v-subheader inset>Worker</v-subheader>
 
         <v-list-item
-                v-for="item in items2"
-                :key="item.title"
+                v-for="worker in workers"
+                :key="worker._id"
                 @click=""
         >
             <v-list-item-avatar>
                 <v-icon
-                        :class="[item.iconClass]"
-                        v-text="item.icon"
+                        :class="[worker.iconClass]"
+                        v-text="worker.icon"
                 ></v-icon>
             </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                <v-list-item-title>{{worker.workerName}}</v-list-item-title>
+                <v-list-item-subtitle v-text="worker.subtitle"></v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-action>
@@ -69,17 +69,7 @@
   export default {
     name: 'server',
     data() {
-      return {
-        items: [
-          {icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Photos', subtitle: 'Jan 9, 2014'},
-          {icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Recipes', subtitle: 'Jan 17, 2014'},
-          {icon: 'folder', iconClass: 'grey lighten-1 white--text', title: 'Work', subtitle: 'Jan 28, 2014'},
-        ],
-        items2: [
-          {icon: 'assignment', iconClass: 'blue white--text', title: 'Vacation itinerary', subtitle: 'Jan 20, 2014'},
-          {icon: 'call_to_action', iconClass: 'amber white--text', title: 'Kitchen remodel', subtitle: 'Jan 10, 2014'},
-        ],
-      };
+      return {};
     },
     computed: {
       locations() {
@@ -97,11 +87,26 @@
             ) :
             [];
       },
+      workers() {
+        return (this.$store.state.server[this.$route.params.id] &&
+            this.$store.state.server[this.$route.params.id].workers) ?
+            this.$store.state.server[this.$route.params.id].workers.map(
+                w => ({
+                  icon: 'assignment',
+                  iconClass: 'blue white--text',
+                  title: 'Photos',
+                  subtitle: 'Jan 9, 2014',
+                  workerName: w.workerName,
+                }),
+            ) :
+            [];
+      },
     },
     beforeMount() {
       this.$store.dispatch('getServer', this.$route.params.id).then(
           server => {
-            this.$store.dispatch('getLocationList', server._id)
+            this.$store.dispatch('getLocationList', server._id);
+            this.$store.dispatch('getWorkerList', server._id);
           },
       );
 

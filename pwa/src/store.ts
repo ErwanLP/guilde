@@ -25,6 +25,9 @@ export default new Vuex.Store({
         SET_LOCATION_LIST(state, payload) {
             Vue.set(state.server[payload.serverId], 'locations', payload.locations)
         },
+        SET_WORKER_LIST(state, payload) {
+            Vue.set(state.server[payload.serverId], 'workers', payload.workers)
+        },
         EDIT_HOST(state, payload) {
             state.host = payload;
             state.axiosInstance = axios.create({
@@ -49,6 +52,7 @@ export default new Vuex.Store({
                 {},
             ).then((r) => r.data).then((servers) => {
                 commit('SET_SERVER_LIST', servers);
+                return servers
             });
         },
         getServer({commit, state}, id) {
@@ -66,6 +70,16 @@ export default new Vuex.Store({
                 commit('SET_LOCATION_LIST', {
                     serverId: id,
                     locations: locations
+                });
+            });
+        },
+        getWorkerList({commit, state}, id) {
+            return state.axiosInstance.get('servers/' + id + '/workers/',
+                {},
+            ).then((r) => r.data).then((worker) => {
+                commit('SET_WORKER_LIST', {
+                    serverId: id,
+                    workers: worker
                 });
             });
         },

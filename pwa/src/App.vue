@@ -35,6 +35,16 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item>
+                    <v-list-item-action>
+                        <v-icon>mdi-contact-mail</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title @click="logOut">
+                            LogOut
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -60,6 +70,9 @@
 </template>
 
 <script>
+  import localforage from 'localforage';
+
+
   export default {
     props: {
       source: String,
@@ -70,6 +83,11 @@
     computed: {
       userName() {
         return this.$store.state.user ? this.$store.state.user.displayName : '';
+      },
+    },
+    methods: {
+      logOut() {
+        localforage.removeItem('USER_UID');
       },
     },
   };

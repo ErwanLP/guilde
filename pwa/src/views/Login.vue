@@ -30,6 +30,7 @@
 
 <script>
   import firebase from 'firebase';
+  import localforage from 'localforage';
 
   export default {
     name: 'login',
@@ -42,7 +43,11 @@
         firebase.auth().signInWithPopup(provider).then(
             (result) => {
               this.$store.dispatch('signUp', result).then(
-                  () => this.$router.push({name: 'servers'}),
+                  () => {
+                    localforage.setItem('USER_UID', result.user.uid, () => {
+                      this.$router.push({name: 'servers'})
+                    });
+                  }
               );
             },
         )
